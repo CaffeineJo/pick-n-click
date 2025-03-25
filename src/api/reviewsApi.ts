@@ -15,6 +15,10 @@ export const getReviewsByItemId = async (id: number) => {
     `,
     )
     .eq('item_id', id);
+  if (error) {
+    console.error('getReviewsByItemId', error);
+    return;
+  }
   return data;
 };
 
@@ -22,7 +26,10 @@ export const getReviewsByItemId = async (id: number) => {
 //@return 해당 유저의 review 정보 모두
 export const getReviewByUserId = async (id: string) => {
   const { data, error, status } = await supabase.from('reviews').select('*').eq('uid', id);
-
+  if (error) {
+    console.error('getReviewByUserId', error);
+    return;
+  }
   return data;
 };
 
@@ -30,6 +37,10 @@ export const getReviewByUserId = async (id: string) => {
 //@return 추가된 review 데이터 값
 export const addOrderedItems = async (review: review) => {
   const { data, error, status } = await supabase.from('reviews').insert([review]).select();
+  if (error) {
+    console.error('addOrderedItems', error);
+    return;
+  }
   return data;
 };
 
@@ -37,5 +48,9 @@ export const addOrderedItems = async (review: review) => {
 //@return 삭제 결과
 export const deleteOrderItems = async (id: number) => {
   const { data, error, status } = await supabase.from('reviews').delete().eq('review_id', id);
+  if (error) {
+    console.error('deleteOrderItems', error);
+    return;
+  }
   return data;
 };

@@ -17,6 +17,10 @@ export const getOrderedItemsBySellerId = async (id: number) => {
     `,
     )
     .eq('seller_id', id);
+  if (error) {
+    console.error('getOrderedItemsBySellerId', error);
+    return;
+  }
   return data;
 };
 
@@ -27,7 +31,10 @@ export const getOrderedItemsById = async (id: number) => {
     .from('ordered_items')
     .select('*')
     .eq('order_id', id);
-
+  if (error) {
+    console.error('getOrderedItemsById', error);
+    return;
+  }
   return data;
 };
 
@@ -35,6 +42,10 @@ export const getOrderedItemsById = async (id: number) => {
 //@return 추가된 item 데이터 값
 export const addOrderedItems = async (items: ItemArray) => {
   const { data, error, status } = await supabase.from('ordered_items').insert([items]).select();
+  if (error) {
+    console.error('addOrderedItems', error);
+    return;
+  }
   return data;
 };
 
@@ -48,6 +59,10 @@ export const updateOrderStatus = async (status: string) => {
       status: status,
     })
     .select();
+  if (error) {
+    console.error('updateOrderStatus', error);
+    return;
+  }
   return data;
 };
 
@@ -55,5 +70,9 @@ export const updateOrderStatus = async (status: string) => {
 //@return 삭제 결과
 export const deleteOrderItems = async (id: number) => {
   const { data, error, status } = await supabase.from('ordered_items').delete().eq('order_id', id);
+  if (error) {
+    console.error('deleteOrderItems', error);
+    return;
+  }
   return data;
 };

@@ -8,6 +8,10 @@ export const getWishesByUserId = async (id: string) => {
     console.error('getWishesByUserId', error);
     return;
   }
+  if (error) {
+    console.error(' getWishesByUserId', error);
+    return;
+  }
   return data;
 };
 
@@ -36,6 +40,10 @@ export const addWish = async (id: string, item_id: number) => {
       item: id,
     })
     .select();
+  if (error) {
+    console.error('addWish', error);
+    return;
+  }
   return data;
 };
 
@@ -47,5 +55,9 @@ export const deleteWish = async (id: string, item_id: number) => {
     .delete()
     .eq('item_id', id)
     .eq('uid', id);
+  if (error) {
+    console.error('deleteWish', error);
+    return;
+  }
   return data;
 };

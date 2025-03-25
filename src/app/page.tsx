@@ -3,12 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import supabase from '@/services/supabase';
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 interface Item {
   item_id: number;
@@ -38,9 +33,9 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="p-4 max-w-4xl mx-auto pt-20">
-      <h1 className="text-lg font-bold mb-4">전체 상품</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <main className="mx-auto max-w-4xl p-4 pt-20">
+      <h1 className="mb-4 text-lg font-bold">전체 상품</h1>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {items.map((item) => (
           <Card
             key={item.item_id}
@@ -52,9 +47,9 @@ export default function HomePage() {
               <img
                 src={item.thumbnail}
                 alt={item.title}
-                className="w-full h-40 object-cover rounded"
+                className="h-40 w-full rounded object-cover"
               />
-              <CardTitle className="text-base mt-2">{item.title}</CardTitle>
+              <CardTitle className="mt-2 text-base">{item.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-gray-700">{item.content}</p>
