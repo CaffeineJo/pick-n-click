@@ -32,13 +32,17 @@ export const getItemById = async (id: number) => {
   return data;
 };
 
-//@param id[] 가져올 상품의 id 배열 값
-//@return 일치하는 상품들의 정보 배열
-export const getItemsByIdArray = async (ids: number[]) => {
-  const { data, error, status } = await supabase.from('items').select('*').in('item_id', ids);
-  if (error) console.error('getItemByIdArray', error);
+/**
+ * DB로부터 아이템 디테일 리스트를 가져오는 함수
+ * @param ids - 가져오고자 하는 아이템의 id 배열
+ * @returns 아이템 정보 배열
+ */
+export const getItemsByIdArray = async (ids: number[]): Promise<Item[]> => {
+  const { data, error } = await supabase.from('items').select('*').in('item_id', ids);
+  if (error) throw new Error(error.message);
   return data;
 };
+
 
 //@param item 배열
 //@return 추가된 item 데이터 값
@@ -74,15 +78,4 @@ export const deleteItem = async (itemId: string) => {
     console.error('deleteItem error', error);
     throw error;
   }
-};
-
-/**
- * DB로부터 아이템 디테일 리스트를 가져오는 함수
- * @param ids - 가져오고자 하는 아이템의 id 배열
- * @returns 아이템 정보 배열
- */
-export const getItemsByIdArray = async (ids: number[]): Promise<Item[]> => {
-  const { data, error } = await supabase.from('items').select('*').in('item_id', ids);
-  if (error) throw new Error(error.message);
-  return data;
 };
