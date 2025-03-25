@@ -2,19 +2,21 @@
  * 개별 아이템의 타입
  */
 export type Item = {
-  id: number;
-  sellerId: number;
+  item_id: number;
+  seller_id: number;
   title: string;
   content: string;
   thumbnail: string;
   stock: number;
   price: number;
+  img_list?: string; // JSON 문자열
+  item_id: number;
 };
 
 /**
- * 장바구니 화면에서 필요한 정보만 담고 있는 아이템 타입
+ * 로컬 스토리지에 저장하기 위한 타입
  */
 export type CartItem = {
-  id: Item['id'];
+  id: Item['item_id'];
   amount: number;
 };

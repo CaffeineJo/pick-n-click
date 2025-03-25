@@ -3,12 +3,12 @@ import supabase from '@/services/supabase';
 //@param id 유저의 uid 값
 //@return sellers 테이블의 전체 내용용 없을경우 빈배열이 반환됨됨
 export const getSellerInfo = async (id: string) => {
-  const { data, error, status } = await supabase.from('sellers').select('*').eq('uid', id);
-  if (error) {
-    console.error('getSellerInfo', error);
-    return;
-  }
-  return data;
+  const { data, error, status } = await supabase
+    .from('sellers')
+    .select('*')
+    .eq('uid', id)
+    .maybeSingle();
+  return { data, error, status };
 };
 
 //@param id 유저의 uid 값

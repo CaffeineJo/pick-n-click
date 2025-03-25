@@ -21,6 +21,7 @@ const SPACE_SIZE = {
   16: '16',
   20: '20',
   24: '24',
+  40: '40',
 } as const;
 
 const Spacer = ({ width, height }: SpacerProps) => {
@@ -30,7 +31,7 @@ const Spacer = ({ width, height }: SpacerProps) => {
   const heightClass = height ? `h-${SPACE_SIZE[height]}` : '';
 
   // block을 명시적으로 추가
-  return <div className={`block ${widthClass} ${heightClass}`.trim()} />;
+  <div className={`inline-block ${widthClass} ${heightClass}`.trim()} />;
 };
 
 export default Spacer;

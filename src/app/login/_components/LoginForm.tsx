@@ -15,11 +15,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import supabase from '@/services/supabase';
 import Link from 'next/link';
-import useAuthStore from '@/store/authStore';
 
 export default function LoginForm() {
-  const { login } = useAuthStore();
-
   const formSchema = z.object({
     email: z.string().email({ message: '유효한 이메일을 입력해 주세요.' }),
     password: z.string().min(8, {
@@ -38,7 +35,7 @@ export default function LoginForm() {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const { email, password } = data;
-      const { data: authData, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -47,16 +44,7 @@ export default function LoginForm() {
         throw new Error(error.message || '로그인 실패');
       }
 
-      login(
-        {
-          // 타입에러 임시방편
-          email: authData.user.email!,
-          nickname: authData.user.user_metadata?.nickname || '',
-        },
-        authData.session.access_token,
-      );
       alert('로그인 성공');
-      // 타입에러 임시방편
     } catch (error: unknown) {
       if (error instanceof Error) {
         alert(error.message);

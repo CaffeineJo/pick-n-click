@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
+import Image from 'next/image';
 
 export const Header = () => {
   const router = useRouter();
@@ -17,10 +18,11 @@ export const Header = () => {
     <header className="fixed top-0 left-0 w-full z-50 bg-white shadow-md border-b">
     <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2">
       <Link href="/">
-        <img
+        <Image
           src="/images/logo.svg"
           alt="Pick n Click Logo"
-          className="h-10"
+          height={40}
+          width={160}
         />
       </Link>
   

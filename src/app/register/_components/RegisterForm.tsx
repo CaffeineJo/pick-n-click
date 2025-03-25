@@ -15,11 +15,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import supabase from '@/services/supabase';
-import useAuthStore from '@/store/authStore';
 
 export default function RegisterForm() {
-  const { login } = useAuthStore();
-
   const formSchema = z
     .object({
       email: z.string().email({ message: '유효한 이메일을 입력해 주세요.' }),
@@ -49,7 +46,7 @@ export default function RegisterForm() {
     try {
       const { email, password, nickname } = data;
 
-      const { data: registerData, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -61,14 +58,6 @@ export default function RegisterForm() {
         throw new Error(error.message || '회원가입 실패');
       }
 
-      login(
-        {
-          email: registerData.user?.email,
-          nickname: registerData.user?.user_metadata?.nickname || '',
-        },
-        // 아래 타입 오류 월요일 튜터님께 문의 예정..
-        registerData.session?.access_token,
-      );
       alert('회원가입이 완료되었습니다.');
       router.push('/login');
     } catch (error: unknown) {

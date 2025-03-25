@@ -1,16 +1,43 @@
-import { CartItem } from '@/types/type';
+import { CartItem, Item } from '@/types/cartType';
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 type CartStore = {
   /** 현재 저장된 장바구니 목록 */
-  items: { [key: number]: number };
+  items: { [key: Item['item_id']]: number };
+
+  /** 현재 저장된 아이템 id 목록 */
+  itemIds: number[] | null;
 
   /**
-   * 장바구니에 아이템 추가 및 업데이트
+   * 장바구니에 새로운 아이템 추가
    * @param newItem - 새로운 아이템
    */
   addItem: (newItem: CartItem) => void;
+
+  /**
+   * 장바구니 아이템 수량 업데이트
+   * @param item - 업데이트할 아이템
+   */
+  updateItem: (item: CartItem) => void;
+
+  /**
+   * 장바구니에서 아이템 삭제
+   * @param idList - 삭제할 아이템의 id 리스트
+   */
+  removeItem: (idList: string[]) => void;
+
+  /**
+   * 아이템의 개수를 1 증가
+   * @param itemId - 아이템의 id
+   */
+  increment: (itemId: number) => void;
+
+  /**
+   * 아이템의 개수를 1 감소
+   * @param itemId - 아이템의 id
+   */
+  decrement: (itemId: number) => void;
 };
 
 /**
@@ -19,21 +46,60 @@ type CartStore = {
  */
 export const cartStore = create<CartStore>()(
   persist(
-    (set, get) => ({
-      items: [],
+    (set) => ({
+      items: {},
+
+      itemIds: null,
 
       addItem: (newItem: CartItem) => {
-        const items = get().items;
-        const amount = items[newItem.id];
-        if (amount) {
-          alert('동일한 상품이 장바구니에 있어 수량이 변경되었습니다.');
-        }
-        set({ items: { ...items, [newItem.id]: newItem.amount + (amount || 0) } });
+        set((state) => {
+          const itemIds = state.itemIds ? [...state.itemIds, newItem.id] : [newItem.id];
+          return { items: { ...state.items, [newItem.id]: newItem.amount }, itemIds };
+        });
       },
+
+      updateItem: (item: CartItem) => {
+        set((state) => {
+          const amount = state.items[item.id];
+          return { items: { ...state.items, [item.id]: item.amount + amount } };
+        });
+      },
+
+      removeItem: (idList: string[]) => {
+        set((state) => {
+          const items = { ...state.items };
+          idList.forEach((id: string) => {
+            delete items[parseInt(id)];
+          });
+          const itemIds = state.itemIds?.filter((id) => !idList.includes(id.toString()));
+          return { items, itemIds };
+        });
+      },
+
+      increment: (itemId: number) =>
+        set((state) => {
+          const currentQuantity = state.items[itemId];
+          return {
+            items: {
+              ...state.items,
+              [itemId]: currentQuantity + 1,
+            },
+          };
+        }),
+
+      decrement: (itemId: number) =>
+        set((state) => {
+          const currentQuantity = state.items[itemId];
+          return {
+            items: {
+              ...state.items,
+              [itemId]: currentQuantity - 1,
+            },
+          };
+        }),
     }),
     {
       name: 'cart-storage',
-      storage: createJSONStorage(() => localStorage),
     },
   ),
 );

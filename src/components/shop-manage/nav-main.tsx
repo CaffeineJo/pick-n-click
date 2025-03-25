@@ -23,7 +23,7 @@ export function NavMain({
   const pathname = usePathname();
 
   const handleClickCreate = () => {
-    console.log('Create clicked');
+    router.push('/shop-manage/create');
   };
 
   const handleClickMenu = (url: string) => () => {
