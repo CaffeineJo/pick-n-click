@@ -6,7 +6,6 @@ type CardProps = {
   selectedTab: 'orders' | 'reviews_written' | 'reviews_unwritten';
 };
 export const Cards = ({ tabContents, selectedTab }: CardProps) => {
-  console.log(tabContents);
   if (selectedTab === 'orders') {
     return (
       <>

@@ -28,14 +28,14 @@ export default function MyPage() {
   });
 
   useEffect(() => {
-    async function fetchUsers() {
+    const fetchUsers = async () => {
       const data: User = (await getUserInfo(userId)) || {
         nickname: '',
         email: '',
         introduction: '',
       };
       setUser(data);
-    }
+    };
     fetchUsers();
   }, [userId]);
 
@@ -52,7 +52,7 @@ export default function MyPage() {
           reviews_unwritten: reviewsUnwritten,
         });
       } catch (error) {
-        console.error('Unexpected error', error);
+        console.error('dataFetchingError', error);
       }
     };
     fetchData();
