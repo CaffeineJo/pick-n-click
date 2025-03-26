@@ -5,9 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 import supabase from '@/services/supabase';
 import { ImageSlider } from '@/components/detail/ImageSlider';
 import { AddCartButton } from '@/components/cart/AddCartButton';
-import { Loading } from '@/components/detail/Loading'; // 로딩 컴포넌트
-import { Error2 } from '@/components/detail/Error';
-import { Item } from '@/types/cartType';
+import {Loading} from '@/components/detail/Loading'; // 로딩 컴포넌트
+import {Error2} from '@/components/detail/Error'; 
+import {Item} from "@/types/cartType"
+import { ReviewList } from '@/components/detail/ReviewList';
 
 // 특정 상품을 Supabase에서 가져오는 함수
 const fetchDetailItem = async (item_id: string | string[]): Promise<Item> => {
@@ -73,6 +74,8 @@ export default function DetailPage() {
           <AddCartButton id={Number(item_id)} amount={1} />
         </div>
       </div>
+      {/* 리뷰 목록 렌더링 */}
+      <ReviewList itemId={Number(item_id)} />
     </main>
   );
 }

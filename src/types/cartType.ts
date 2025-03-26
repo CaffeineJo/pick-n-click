@@ -2,7 +2,6 @@
  * 개별 아이템의 타입
  */
 export type Item = {
-  item_id: number;
   seller_id: number;
   title: string;
   content: string;
@@ -10,6 +9,7 @@ export type Item = {
   stock: number;
   price: number;
   img_list?: string; // JSON 문자열
+  item_id: number;
 };
 
 /**
@@ -18,4 +18,9 @@ export type Item = {
 export type CartItem = {
   id: Item['item_id'];
   amount: number;
+};
+
+export type ItemWithImages = {
+  item: Item;
+  images: string[];
 };
