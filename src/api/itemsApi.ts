@@ -27,7 +27,7 @@ export const getItemsBySellerId = async (id: number): Promise<Payment[]> => {
 //@param id 상품의 id 값
 //@return 해당 상품에 대한 정보만 가져옴
 export const getItemById = async (id: number) => {
-  const { data, error, status } = await supabase.from('items').select('*').eq('item_id', id);
+  const { data, error } = await supabase.from('items').select('*').eq('item_id', id);
   if (error) console.error('getItemById', error);
   return data;
 };
@@ -43,11 +43,10 @@ export const getItemsByIdArray = async (ids: number[]): Promise<Item[]> => {
   return data;
 };
 
-
 //@param item 배열
 //@return 추가된 item 데이터 값
 export const addItem = async (item: Item) => {
-  const { data, error, status } = await supabase.from('items').insert([item]).select();
+  const { data, error } = await supabase.from('items').insert([item]).select();
   if (error) {
     console.error('addItem', error);
     return;
@@ -78,4 +77,10 @@ export const deleteItem = async (itemId: string) => {
     console.error('deleteItem error', error);
     throw error;
   }
+};
+
+/** 상품 재고를 업데이트하는 함수 */
+export const updateStock = async (itemId: number, stock: number) => {
+  const { error } = await supabase.from('items').update({ stock }).eq('item_id', itemId);
+  if (error) throw new Error('상품 재고를 업데이트하는 도중 오류가 발생했습니다.');
 };
