@@ -1,4 +1,5 @@
 import LoginForm from '@/components/login/LoginForm';
+import SocialLoginForm from '@/components/login/SocialLoginForm';
 
 export default function Login() {
   return (

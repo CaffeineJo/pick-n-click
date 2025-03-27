@@ -32,5 +32,9 @@ export const AddCartButton = (item: CartItem) => {
     }
   };
 
-  return <Button onClick={() => handleAddItemToCart(item)}>장바구니 추가</Button>;
+  return (
+    <Button className="w-full" onClick={() => handleAddItemToCart(item)}>
+      장바구니 추가
+    </Button>
+  );
 };

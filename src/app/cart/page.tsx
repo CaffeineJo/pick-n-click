@@ -1,5 +1,3 @@
-'use client';
-
 import { ItemCardList } from '@/components/cart/ItemList';
 
 export default function CartPage() {

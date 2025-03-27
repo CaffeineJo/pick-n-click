@@ -33,7 +33,7 @@ export const addWish = async (id: string, item_id: number) => {
     .from('wishes')
     .insert({
       uid: id,
-      item: id,
+      item: item_id,
     })
     .select();
   return data;
@@ -45,7 +45,7 @@ export const deleteWish = async (id: string, item_id: number) => {
   const { data, error, status } = await supabase
     .from('wishes')
     .delete()
-    .eq('item_id', id)
+    .eq('item_id', item_id)
     .eq('uid', id);
   return data;
 };

@@ -32,7 +32,7 @@ interface DataTableProps {
  * @param DataTableProps.columns - 장바구니 컬럼 데이터
  * @param DataTableProps.data - 아이템 리스트 (수량 포함 X)
  */
-export function DataTable({ columns, data }: DataTableProps) {
+export const DataTable = ({ columns, data }: DataTableProps) => {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const removeItem = cartStore((state) => state.removeItem);
 
@@ -120,4 +120,4 @@ export function DataTable({ columns, data }: DataTableProps) {
       <CartTotal items={getSelectedRowsOriginal()} />
     </div>
   );
-}
+};

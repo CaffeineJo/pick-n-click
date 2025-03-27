@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import supabase from '@/services/supabase';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import SocialLoginForm from './SocialLoginForm';
 
 export default function LoginForm() {
   const formSchema = z.object({
@@ -119,7 +120,15 @@ export default function LoginForm() {
           </div>
         )}
 
-        <Button type="submit">로그인</Button>
+        {/* <div className="flex w-full gap-2"> */}
+        <Button type="submit" className="w-full">
+          로그인
+        </Button>
+        <div className="w-full">
+          <SocialLoginForm />
+        </div>
+        {/* </div> */}
+
         <div className="text-center">
           <p className="text-sm text-gray-600">
             계정이 없으신가요?

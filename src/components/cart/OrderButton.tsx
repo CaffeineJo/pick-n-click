@@ -23,6 +23,7 @@ export const OrderButton = ({ itemIds }: OrderButtonProps) => {
     if (!user) {
       alert('로그인이 필요합니다.');
       router.push('/login');
+      return;
     }
     const isConfirmed = confirm('주문하시겠습니까?');
     if (!isConfirmed) return;

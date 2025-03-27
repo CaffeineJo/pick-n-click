@@ -11,8 +11,13 @@ export const StoreButton = ({ id }: StoreButtonProps) => {
   useEffect(() => {
     const checkSellerStatus = async () => {
       const data = await getSellerInfo(id);
-      if (data?.length === 0) setIsSeller(false);
-      else setIsSeller(true);
+      if (Array.isArray(data) && data.length === 0) {
+        setIsSeller(false);
+      } else if (data) {
+        setIsSeller(true);
+      } else {
+        setIsSeller(false);
+      }
     };
 
     checkSellerStatus();

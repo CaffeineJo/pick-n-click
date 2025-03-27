@@ -1,3 +1,5 @@
+import { OrderStatus } from './orderType';
+
 export type User = {
   nickname: string;
   email: string;
@@ -9,24 +11,24 @@ export type TabContents = {
   reviews_written: Reviews[];
   reviews_unwritten: Reviews[];
 };
-
-export type Orders = {
-  amount: number;
-  created_at: string;
-  item_id: number;
-  items: Items[];
-  order_id: number;
-  order_status: string;
-};
-
 export type Items = {
   thumbnail: string;
   title: string;
 };
 
+export type Orders = {
+  order_id: number;
+  amount: number;
+  created_at: string;
+  item_id: number;
+  order_status: OrderStatus;
+  items: Items;
+};
+
 export type Reviews = {
   content: string;
   created_at: string;
+  items: Items;
   item_id: number;
   review_id: number;
   uid: string;

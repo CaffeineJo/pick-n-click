@@ -15,6 +15,7 @@ export const useUpdateItem = () => {
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['items'] });
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
     },
     onError: (error) => {
       console.error('상품 수정 실패:', error);

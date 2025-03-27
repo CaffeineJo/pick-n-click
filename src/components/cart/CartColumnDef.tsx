@@ -38,8 +38,14 @@ export const cartColumns: ColumnDef<Item>[] = [
       const item = row.original;
 
       return (
-        <Link href={`/detail/${item.item_id}`} className="flex flex-row gap-2 py-5">
-          <Image src="" alt="" width={100} height={100} className="rounded-xl bg-gray-300" />
+        <Link href={`/detail/${item.item_id}`} className="flex max-w-[500px] flex-row gap-2 py-5">
+          <Image
+            src={item.thumbnail}
+            alt={item.title}
+            width={100}
+            height={100}
+            className="rounded-lg bg-gray-300 object-cover"
+          />
           <div className="flex max-h-[100px] flex-col items-start gap-2 p-1">
             <h3 className="truncate font-bold">{item.title}</h3>
             <p className="line-clamp-3 overflow-hidden text-gray-500">{item.content}</p>

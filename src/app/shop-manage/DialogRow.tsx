@@ -104,7 +104,7 @@ export function DialogRowActions({ payment, onUpdate, onDelete }: Props) {
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>재고 수정</DialogTitle>
+          <DialogTitle>상품 수정</DialogTitle>
           <DialogDescription>상품 정보를 수정한 후 저장하세요.</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
