@@ -49,14 +49,21 @@ export const Cards = ({ tabContents, selectedTab }: CardProps) => {
                   src={item.items.thumbnail}
                   alt={item.items.title}
                   className="h-full w-full rounded-lg object-cover"
+                  width={100}
+                  height={100}
                 />
               </div>
               <div className="flex-1">
                 <h3 className="text-xl font-semibold">상품명 : {item.items.title}</h3>
                 <p>{item.content || '리뷰를 작성해 주세요!'}</p>
-                <p>작성 가능 날짜 : {item.created_at} 로 부터 7일</p>
+                <p>작성 가능 날짜 : {formatKoreanDate(item.created_at)} 로 부터 7일</p>
               </div>
-              <ReviewModal reviewId={item.review_id} written={item.written} />
+              <ReviewModal
+                title={item.items.title}
+                imgSrc={item.items.thumbnail}
+                reviewId={item.review_id}
+                written={item.written}
+              />
             </div>
           ))}
         </div>

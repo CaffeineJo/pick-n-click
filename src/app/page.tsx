@@ -62,7 +62,7 @@ export default function HomePage() {
         ? items
         : items.filter((item) => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
     setFilteredItems(results);
-  }, [debouncedSearchQuery]);
+  }, [debouncedSearchQuery, items]);
 
   // 로딩 상태 처리
   if (isLoading) return <Loading />;

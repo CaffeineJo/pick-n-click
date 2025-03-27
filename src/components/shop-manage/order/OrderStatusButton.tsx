@@ -1,5 +1,6 @@
 'use client';
 
+import { addReviewData } from '@/api/reviewsApi';
 import { Button } from '@/components/ui/button';
 import { useUpdateOrderStatus } from '@/hooks/mutate/useUpdateStatus';
 import { useUpdateStock } from '@/hooks/mutate/useUpdateStock';
@@ -76,11 +77,14 @@ const ChangeOrderStatusButton = ({ item }: { item: OrderedItem }) => {
   const { mutate: updateStatus } = useUpdateOrderStatus();
   const { mutate: updateStock } = useUpdateStock();
 
-  const handleUpdateStatus = () => {
+  const handleUpdateStatus = async () => {
     const isConfirmed = confirm(`상품의 상태를 ${ORDER_STATUS(nextStatus)}로 변경하시겠습니까?`);
     if (!isConfirmed) return;
     if (item.order_status === 'pending') {
       updateStock({ itemId: item.item_id, stock: item.item.stock - item.amount });
+    }
+    if (item.order_status === 'shipped') {
+      await addReviewData({ uid: item.buyer_id, item_id: item.item_id });
     }
     updateStatus({ orderId: item.order_id, status: nextStatus });
   };

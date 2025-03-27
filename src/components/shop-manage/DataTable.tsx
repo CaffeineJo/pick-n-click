@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                아직 판매중인 상품이 없습니다!! 상품을 추가해보세요
               </TableCell>
             </TableRow>
           )}
