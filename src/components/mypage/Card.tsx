@@ -4,19 +4,21 @@ import { formatKoreanDate } from '@/utils/formatDate';
 import { ORDER_STATUS } from '@/utils/translateOrderStatus';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Dispatch, SetStateAction } from 'react';
 
 type CardProps = {
   tabContents: TabContents;
+  setTabContents: Dispatch<SetStateAction<TabContents>>;
   selectedTab: 'orders' | 'reviews_written' | 'reviews_unwritten';
 };
 
-export const Cards = ({ tabContents, selectedTab }: CardProps) => {
+export const Cards = ({ tabContents, setTabContents, selectedTab }: CardProps) => {
   if (selectedTab === 'orders') {
     return (
       <>
         <div className="mt-8 grid w-full max-w-4xl grid-rows-3 gap-6">
           {tabContents[selectedTab].map((item, index) => (
-            <div key={item.item_id || index} className="flex items-center gap-6">
+            <div key={index} className="flex items-center gap-6">
               <Link href={`/detail/${item.item_id}`} className="relative h-40 w-40 bg-gray-200">
                 <Image
                   src={item.items.thumbnail}
@@ -43,7 +45,7 @@ export const Cards = ({ tabContents, selectedTab }: CardProps) => {
       <>
         <div className="mt-8 grid w-full max-w-4xl grid-rows-3 gap-6">
           {tabContents[selectedTab].map((item, index) => (
-            <div key={item.item_id || index} className="flex items-center gap-6">
+            <div key={index} className="flex items-center gap-6">
               <div className="relative h-40 w-40 bg-gray-200">
                 <Image
                   src={item.items.thumbnail}
@@ -59,6 +61,7 @@ export const Cards = ({ tabContents, selectedTab }: CardProps) => {
                 <p>작성 가능 날짜 : {formatKoreanDate(item.created_at)} 로 부터 7일</p>
               </div>
               <ReviewModal
+                setTabContents={setTabContents}
                 title={item.items.title}
                 imgSrc={item.items.thumbnail}
                 reviewId={item.review_id}

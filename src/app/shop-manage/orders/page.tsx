@@ -6,11 +6,18 @@ import { SidebarInset } from '@/components/ui/sidebar';
 import { useGetOrders } from '@/hooks/queries/useGetOrders';
 import useAuthStore from '@/store/authStore';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const OrderPage = () => {
   const user = useAuthStore((state) => state.user);
   const { data: orderedItems, isLoading, isError } = useGetOrders(user?.id as string);
 
+  const router = useRouter();
+  if (!user) {
+    alert('로그인 후 이용해주세요.');
+    router.push('/login');
+    return;
+  }
   if (!orderedItems || isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러 발생</div>;
 

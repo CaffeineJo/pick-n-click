@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -14,13 +14,16 @@ import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { addReview } from '@/api/reviewsApi';
 import Image from 'next/image';
+import { TabContents } from '@/types/mypageType';
 
 const ReviewModal = ({
+  setTabContents,
   title,
   reviewId,
   imgSrc,
   written,
 }: {
+  setTabContents: Dispatch<SetStateAction<TabContents>>;
   title: string;
   reviewId: number;
   imgSrc: string;
@@ -35,6 +38,23 @@ const ReviewModal = ({
 
   const handleReviewUpload = async () => {
     await addReview({ id: reviewId, content: text });
+    setTabContents((prev) => {
+      const targetReview = prev.reviews_unwritten.find((review) => review.review_id === reviewId);
+      if (!targetReview) {
+        return prev;
+      }
+      const updatedReview = {
+        ...targetReview,
+        content: text,
+        written: true,
+      };
+      return {
+        ...prev,
+        reviews_written: [...prev.reviews_written, updatedReview],
+        reviews_unwritten: prev.reviews_unwritten.filter((review) => review.review_id !== reviewId),
+      };
+    });
+    alert('리뷰 등록이 완료되었습니다!');
     setOpen(false);
   };
 

@@ -14,15 +14,20 @@ import { useItemsBySellerId } from '@/hooks/queries/useItemsBySellerId';
 import useAuthStore from '@/store/authStore';
 import { getSellerInfo } from '@/api/sellersApi';
 import { DataTableWithSearch } from '@/components/shop-manage/DataTableWithSearch';
+import { useRouter } from 'next/navigation';
 
 export default function ShopManagePage() {
   const user = useAuthStore((state) => state.user);
   const [sellerId, setSellerId] = useState<number | null>(null);
   const [isSellerLoading, setIsSellerLoading] = useState(true);
 
+  const router = useRouter();
+
   useEffect(() => {
     const fetchSellerId = async () => {
       if (!user) {
+        alert('로그인 후 이용해주세요.');
+        router.push('/login');
         return;
       }
       try {

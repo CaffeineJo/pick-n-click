@@ -4,12 +4,7 @@ import { useState, useEffect } from 'react';
 import WatchedItems from '@/components/WatchedItems';
 import { Item } from '@/types/cartType';
 
-type RecentlyViewedSidebarProps = {
-  items: Item[];
-};
-
-// 아래 타입 오류 해결해야됨..
-const RecentlyViewedSidebar = ({ items }: RecentlyViewedSidebarProps) => {
+const RecentlyViewedSidebar = () => {
   const [watchedItems, setWatchedItems] = useState<Item[]>([]);
 
   // 최근 본 상품 로드

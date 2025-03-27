@@ -174,7 +174,9 @@ export default function RegisterForm() {
           </div>
         )}
 
-        <Button type="submit">가입하기</Button>
+        <Button className="w-full" type="submit">
+          가입하기
+        </Button>
       </form>
     </Form>
   );

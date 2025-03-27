@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import useAuthStore from '@/store/authStore';
 import { ShoppingBasket } from 'lucide-react';
 import { Caveat } from 'next/font/google';
+import supabase from '@/services/supabase';
 
 const caveat = Caveat({
   subsets: ['latin'],
@@ -13,10 +14,10 @@ const caveat = Caveat({
 
 export const Header = () => {
   const router = useRouter();
-  const { user, logout } = useAuthStore();
+  const { user } = useAuthStore();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     router.push('/');
   };
 
