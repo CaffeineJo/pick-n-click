@@ -5,7 +5,7 @@ import supabase from '@/services/supabase';
 export const getWishesByUserId = async (id: string) => {
   const { data, error, status } = await supabase.from('wishes').select('*').eq('uid', id);
   if (error) {
-    console.error('getWishesByUserId', error, status);
+    console.error('getWishesByUserId', error);
     return;
   }
   return data;
@@ -20,7 +20,7 @@ export const getWishesByUsernItemId = async (id: string, item_id: number) => {
     .eq('uid', id)
     .eq('item_id', item_id);
   if (error) {
-    console.error('getWishesByUsernItemId', error, status);
+    console.error('getWishesByUsernItemId', error);
     return;
   }
   return data;
@@ -36,10 +36,6 @@ export const addWish = async (id: string, item_id: number) => {
       item: item_id,
     })
     .select();
-  if (error) {
-    console.error('addWish', error, status);
-    return;
-  }
   return data;
 };
 
@@ -51,9 +47,5 @@ export const deleteWish = async (id: string, item_id: number) => {
     .delete()
     .eq('item_id', item_id)
     .eq('uid', id);
-  if (error) {
-    console.error('deleteWish', error, status);
-    return;
-  }
   return data;
 };

@@ -1,15 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { OrderedItem, OrderStatus } from '../../../types/orderType';
+import { OrderedItem } from '../../../types/orderType';
 import Image from 'next/image';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { useUpdateOrderStatus } from '@/hooks/mutate/useUpdateStatus';
-import { ORDER_STATUS } from '@/utils/translateOrderStatus';
+import { OrderStatusText } from './OrderStatusText';
 
 /** 주문 상품 테이블 컬럼 데이터 */
 export const orderedColumns: ColumnDef<OrderedItem>[] = [
@@ -50,7 +42,6 @@ export const orderedColumns: ColumnDef<OrderedItem>[] = [
     header: '수량',
     cell: ({ row }) => {
       const item = row.original;
-
       return <div className="whitespace-nowrap px-5 text-center">{item.amount}</div>;
     },
   },
@@ -59,34 +50,7 @@ export const orderedColumns: ColumnDef<OrderedItem>[] = [
     header: '상태',
     cell: ({ row }) => {
       const item = row.original;
-      const status: OrderStatus[] = ['pending', 'paid', 'shipped', 'delivered', 'cancelled'];
-      const { mutate: updateStatus } = useUpdateOrderStatus();
-
-      const handleStatusChange = (value: OrderStatus) => {
-        updateStatus({ orderId: item.order_id, status: value });
-      };
-
-      return (
-        <div className="flex justify-center p-2">
-          <div className="w-[120px]">
-            <Select
-              defaultValue={item.order_status}
-              onValueChange={(value: OrderStatus) => handleStatusChange(value)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="상태 선택" />
-              </SelectTrigger>
-              <SelectContent>
-                {status.map((s: OrderStatus) => (
-                  <SelectItem key={s} value={s}>
-                    {ORDER_STATUS(s)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      );
+      return <OrderStatusText status={item.order_status} />;
     },
   },
 ];

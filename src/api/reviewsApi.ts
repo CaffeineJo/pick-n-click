@@ -13,7 +13,6 @@ export const getReviewsByItemId = async (id: number): Promise<Review[]> => {
 
   if (error) throw new Error(error.message);
   return data ?? []; // null 대신 빈 배열 반환!
-
 };
 
 //@param id user의 uid 정보
@@ -49,5 +48,18 @@ export const addReview = async ({ id, content }: { id: number; content: string }
     .eq('review_id', id)
     .select();
   if (error) console.error('addreview', error, status);
+  return data;
+};
+
+export const addReviewData = async ({ uid, item_id }: { uid: string; item_id: number }) => {
+  const { data, error, status } = await supabase
+    .from('reviews')
+    .insert({
+      uid: uid,
+      item_id: item_id,
+      written: false,
+    })
+    .select();
+  if (error) console.error('reviews', error, status);
   return data;
 };

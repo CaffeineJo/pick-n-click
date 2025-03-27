@@ -7,7 +7,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
  * @param itemIds 장바구니에 담긴 아이템 id 배열
  * - 장바구니 스토어로부터 가져와야 합니다.
  */
-export const UseGetCart = (itemIds: number[] | null): UseQueryResult<Item[], Error> => {
+export const useGetCart = (itemIds: number[] | null): UseQueryResult<Item[], Error> => {
   return useQuery({
     queryKey: ['cart', itemIds],
     queryFn: () => {

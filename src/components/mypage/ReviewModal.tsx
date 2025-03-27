@@ -13,8 +13,19 @@ import {
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
 import { addReview } from '@/api/reviewsApi';
+import Image from 'next/image';
 
-const ReviewModal = ({ reviewId, written }: { reviewId: number; written: boolean }) => {
+const ReviewModal = ({
+  title,
+  reviewId,
+  imgSrc,
+  written,
+}: {
+  title: string;
+  reviewId: number;
+  imgSrc: string;
+  written: boolean;
+}) => {
   const [text, setText] = useState('');
   const [open, setOpen] = useState(false);
 
@@ -47,11 +58,17 @@ const ReviewModal = ({ reviewId, written }: { reviewId: number; written: boolean
           <div className="mt-4 space-y-4">
             <div className="flex items-center space-x-4 rounded-md border p-4">
               <div className="flex h-20 w-20 items-center justify-center rounded-md bg-gray-100 text-xs text-gray-400">
-                상품 이미지
+                <Image
+                  src={imgSrc}
+                  alt={imgSrc}
+                  className="h-full w-full rounded-lg object-cover"
+                  width={100}
+                  height={100}
+                />
               </div>
               <div>
-                <p className="text-sm font-semibold">상품명</p>
-                <p className="text-sm text-muted-foreground">상품 디스크립션</p>
+                <p className="text-sm font-semibold">{title}</p>
+                <p className="text-sm text-muted-foreground"></p>
               </div>
             </div>
 

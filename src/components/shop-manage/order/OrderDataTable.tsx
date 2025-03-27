@@ -10,14 +10,27 @@ import {
 } from '@/components/ui/table';
 import { orderedColumns } from './OrderColumnDef';
 import { OrderedItem } from '../../../types/orderType';
-import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { flexRender, getCoreRowModel, Row, useReactTable } from '@tanstack/react-table';
+import { useEffect, useState } from 'react';
+import { ItemModal } from './ItemModal';
 
+/** 주문 데이터 테이블 */
 export const DataTable = ({ data }: { data: OrderedItem[] }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+
   const table = useReactTable({
     data,
     columns: orderedColumns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleRowClick = (row: Row<OrderedItem>) => {
+    setSelectedRowId(row.original.order_id);
+    setOpen(true);
+  };
+
+  const selectedItem = data.find((item) => item.order_id === selectedRowId);
 
   return (
     <div className="space-y-4">
@@ -39,26 +52,24 @@ export const DataTable = ({ data }: { data: OrderedItem[] }) => {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={data.length} className="h-24 text-center">
-                  No results.
-                </TableCell>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow
+                onClick={() => handleRowClick(row)}
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+                className="cursor-pointer"
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
               </TableRow>
-            )}
+            ))}
           </TableBody>
         </Table>
       </div>
+      <ItemModal open={open} setOpen={setOpen} item={selectedItem} />
     </div>
   );
 };

@@ -78,3 +78,9 @@ export const deleteItem = async (itemId: string) => {
     throw error;
   }
 };
+
+/** 상품 재고를 업데이트하는 함수 */
+export const updateStock = async (itemId: number, stock: number) => {
+  const { error } = await supabase.from('items').update({ stock }).eq('item_id', itemId);
+  if (error) throw new Error('상품 재고를 업데이트하는 도중 오류가 발생했습니다.');
+};

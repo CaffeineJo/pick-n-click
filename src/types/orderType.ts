@@ -5,6 +5,7 @@ export type OrderedItem = {
   amount: number;
   created_at: string;
   item_id: number;
+  buyer_id: string;
   item: Item;
   order_id: number;
   order_status: OrderStatus;

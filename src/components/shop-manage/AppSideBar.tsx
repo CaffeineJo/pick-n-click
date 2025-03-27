@@ -9,8 +9,7 @@ import {
   ListIcon,
 } from 'lucide-react';
 import { NavMain } from '@/components/shop-manage/NavMain';
-import { NavUser } from '@/components/shop-manage/NavUser';
-import { Sidebar, SidebarContent, SidebarFooter } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent } from '@/components/ui/sidebar';
 
 const data = {
   user: {
@@ -85,9 +84,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
     </Sidebar>
   );
 }

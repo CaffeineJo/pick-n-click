@@ -1,4 +1,4 @@
-import { Items } from '@/app/mypage/_types/type';
+import { Items } from '@/types/mypageType';
 import supabase from '@/services/supabase';
 import { OrderedItem, OrderStatus } from '@/types/orderType';
 

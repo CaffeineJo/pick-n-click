@@ -3,13 +3,13 @@
 import { DataTable } from '@/components/shop-manage/order/OrderDataTable';
 import { SiteHeader } from '@/components/shop-manage/SiteHeader';
 import { SidebarInset } from '@/components/ui/sidebar';
-import { UseGetOrders } from '@/hooks/queries/useGetOrders';
+import { useGetOrders } from '@/hooks/queries/useGetOrders';
 import useAuthStore from '@/store/authStore';
 import React from 'react';
 
 const OrderPage = () => {
   const user = useAuthStore((state) => state.user);
-  const { data: orderedItems, isLoading, isError } = UseGetOrders(user?.id as string);
+  const { data: orderedItems, isLoading, isError } = useGetOrders(user?.id as string);
 
   if (!orderedItems || isLoading) return <div>로딩중...</div>;
   if (isError) return <div>에러 발생</div>;

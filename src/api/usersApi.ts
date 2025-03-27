@@ -9,5 +9,5 @@ export const getUserInfo = async (id: string) => {
     .eq('uid', id)
     .single();
   if (error) console.error('getUserInfo', error);
-  return data;
+  return { data };
 };

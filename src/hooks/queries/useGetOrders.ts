@@ -6,7 +6,7 @@ import { getSellerInfo } from '@/api/sellersApi';
  * 판매자의 주문 아이템 정보를 가져오는 쿼리 훅
  * @param id 판매자의 uuid
  */
-export const UseGetOrders = (id: string) => {
+export const useGetOrders = (id: string) => {
   return useQuery({
     queryKey: ['orders'],
     queryFn: async () => {
